@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: html_head('Order History')}"></head>
+<body>
+
+    <!-- Header Navbar -->
+    <header th:replace="~{layout/base :: navbar}"></header>
+
+    <main class="container my-4">
+        
+        <h2 class="text-dark-bean mb-4"><i class="fa-solid fa-clock-rotate-left text-gold me-2"></i>My Order History</h2>
+
+        <div th:if="${orders.isEmpty()}" class="text-center py-5 glass-card p-5">
+            <i class="fa-solid fa-mug-hot fa-4x text-gold mb-3"></i>
+            <h3>No previous orders</h3>
+            <p class="text-muted">Place your first order to see it in your history.</p>
+            <a th:href="@{/shop}" class="btn btn-gold mt-3"><i class="fa-solid fa-store me-2"></i>Browse Menu</a>
+        </div>
+
+        <div class="glass-card p-4" th:if="${!orders.isEmpty()}">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr class="table-dark text-gold">
+                            <th scope="col" style="border-radius: 10px 0 0 0;">Bill Number</th>
+                            <th scope="col">Order Date</th>
+                            <th scope="col">Total Items</th>
+                            <th scope="col">Grand Total</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" style="border-radius: 0 10px 0 0;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="order : ${orders}">
+                            <td class="fw-bold" th:text="${order.billNumber}">CC-2026-0001</td>
+                            <td th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, hh:mm a')}">Date</td>
+                            <td th:text="${order.items.size()}">0</td>
+                            <td class="fw-bold text-dark-bean" th:text="'₹' + ${#numbers.formatDecimal(order.grandTotal, 1, 2)}">₹0.00</td>
+                            <td>
+                                <span th:if="${order.status == 'PENDING'}" class="badge bg-warning text-dark"><i class="fa-solid fa-spinner fa-spin me-1"></i>Pending</span>
+                                <span th:if="${order.status == 'COMPLETED'}" class="badge bg-success"><i class="fa-solid fa-circle-check me-1"></i>Completed</span>
+                                <span th:if="${order.status == 'CANCELLED'}" class="badge bg-danger"><i class="fa-solid fa-circle-xmark me-1"></i>Cancelled</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/invoice/{billNumber}(billNumber=${order.billNumber})}" class="btn btn-sm btn-outline-gold py-1 px-3">
+                                    <i class="fa-solid fa-receipt me-1"></i>View Bill
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Include -->
+    <footer th:replace="~{layout/base :: footer}"></footer>
+
+</body>
+</html>

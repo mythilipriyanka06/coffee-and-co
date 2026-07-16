@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: html_head('Premium Menu')}"></head>
+<body>
+
+    <!-- Header Navbar -->
+    <header th:replace="~{layout/base :: navbar}"></header>
+
+    <main class="container my-4">
+        
+        <!-- Hero Header -->
+        <div class="hero-banner text-center text-white animate-fade-in" style="opacity: 0; transform: translateY(20px); transition: var(--transition);">
+            <div class="glass-dark-card p-4 d-inline-block mx-auto" style="max-width: 700px;">
+                <h1 class="display-5 text-gold mb-2">Our Premium Menu</h1>
+                <p class="lead mb-0">Indulge in our carefully selected artisanal coffees, custom blends, and baked snacks made fresh daily by our master baristas.</p>
+            </div>
+        </div>
+
+        <!-- Alert notifications -->
+        <div th:if="${param.error != null}" class="alert alert-danger alert-dismissible fade show border-0 my-3" role="alert" style="background-color: rgba(220, 53, 69, 0.15); color: #B33939; border-radius: 12px;">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            <span th:text="${param.error}">Error Message</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-container">
+            <div class="input-group search-input-group">
+                <span class="input-group-text bg-white border-0 text-muted"><i class="fa-solid fa-search"></i></span>
+                <input type="text" id="liveSearchInput" class="form-control search-input" placeholder="Search product by name, category, ingredients..." th:value="${searchQuery}">
+                <button type="button" class="btn search-btn text-gold">Live Search</button>
+            </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="category-filter-bar mb-4">
+            <a th:href="@{/shop}" 
+               class="category-filter-btn" 
+               th:classappend="${selectedCategoryId == null} ? 'active' : ''">
+                All Items
+            </a>
+            <a th:each="cat : ${categories}" 
+               th:href="@{/shop(categoryId=${cat.id})}" 
+               class="category-filter-btn" 
+               th:classappend="${selectedCategoryId == cat.id} ? 'active' : ''" 
+               th:text="${cat.name}">
+                Category
+            </a>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-2">
+            <!-- Loop products -->
+            <div class="col product-card-wrapper" th:each="prod : ${products}">
+                <div class="card glass-card product-card h-100">
+                    <div class="product-img-wrapper">
+                        <img th:src="${prod.imagePath}" class="product-img" th:alt="${prod.name}">
+                        <span class="product-category-badge" th:text="${prod.category.name}">Category</span>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-dark-bean mb-2" th:text="${prod.name}">Product Name</h5>
+                        <p class="card-text text-muted small flex-grow-1" th:text="${prod.description}">Description</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="product-price" th:text="'₹' + ${#numbers.formatDecimal(prod.price, 1, 2)}">₹0.00</span>
+                            
+                            <!-- Stock level warning -->
+                            <span th:if="${prod.stock <= 0}" class="badge bg-danger">Out of Stock</span>
+                            <span th:if="${prod.stock > 0 and prod.stock <= 5}" class="badge bg-warning text-dark" th:text="'Only ' + ${prod.stock} + ' left!'">Low Stock</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0 p-3">
+                        <div class="d-grid">
+                            <button th:if="${prod.stock > 0}" 
+                                    class="btn btn-gold btn-add-to-cart" 
+                                    th:data-product-id="${prod.id}">
+                                <i class="fa-solid fa-cart-plus me-2"></i>Add to Cart
+                            </button>
+                            <button th:if="${prod.stock <= 0}" class="btn btn-secondary" disabled>
+                                <i class="fa-solid fa-ban me-2"></i>Unavailable
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No products notification -->
+        <div id="noProductsAlert" class="alert alert-warning text-center mt-4 p-4 border-0" style="display:none; background-color: rgba(243, 156, 18, 0.15); color: #D35400; border-radius: 15px;">
+            <i class="fa-solid fa-mug-hot fa-3x mb-3 text-gold"></i>
+            <h4>No products found</h4>
+            <p class="mb-0">Try search with another keyword or change your filter.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer Include -->
+    <footer th:replace="~{layout/base :: footer}"></footer>
+
+</body>
+</html>

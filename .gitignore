@@ -1,0 +1,27 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Maven build
+target/
+
+# Maven local download (if inside project)
+.maven/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Java
+*.class
+
+# Windows
+Thumbs.db
+
+# Mac
+.DS_Store
+
+# Environment files
+.env

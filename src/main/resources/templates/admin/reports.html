@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: html_head('Sales Reports')}"></head>
+<body>
+
+    <!-- Header Navbar -->
+    <header th:replace="~{layout/base :: navbar}"></header>
+
+    <main class="container my-4">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="text-dark-bean m-0"><i class="fa-solid fa-file-invoice-dollar text-gold me-2"></i>Sales & Analytics Reports</h2>
+                <p class="text-muted m-0">Detailed analytical trends and product popularity metrics.</p>
+            </div>
+            <button onclick="window.print()" class="btn btn-gold no-print"><i class="fa-solid fa-print me-2"></i>Print Report</button>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <!-- Line Chart: Daily Sales Trends -->
+            <div class="col-lg-7">
+                <div class="card glass-card p-4 h-100">
+                    <h5 class="text-dark-bean mb-4 fw-bold"><i class="fa-solid fa-chart-line text-gold me-2"></i>Daily Sales Trend</h5>
+                    <div style="height: 320px; position: relative;">
+                        <canvas id="dailySalesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doughnut Chart: Product Performance -->
+            <div class="col-lg-5">
+                <div class="card glass-card p-4 h-100">
+                    <h5 class="text-dark-bean mb-4 fw-bold"><i class="fa-solid fa-chart-pie text-gold me-2"></i>Product Sales Distribution</h5>
+                    <div style="height: 320px; position: relative;">
+                        <canvas id="productPerformanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card glass-card p-4 mb-4">
+            <h5 class="text-dark-bean mb-3 fw-bold">Executive Summary</h5>
+            <div class="row text-center g-3">
+                <div class="col-6 col-md-3">
+                    <div class="p-3 border rounded bg-light">
+                        <h6 class="text-muted small text-uppercase">Total Revenue</h6>
+                        <h4 class="fw-bold text-dark-bean mb-0" th:text="'₹' + ${#numbers.formatDecimal(totalRevenue, 1, 2)}">₹0.00</h4>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-3 border rounded bg-light">
+                        <h6 class="text-muted small text-uppercase">Total Orders</h6>
+                        <h4 class="fw-bold text-dark-bean mb-0" th:text="${ordersCount}">0</h4>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-3 border rounded bg-light">
+                        <h6 class="text-muted small text-uppercase">Average Ticket Size</h6>
+                        <h4 class="fw-bold text-dark-bean mb-0" th:text="'₹' + ${#numbers.formatDecimal(ordersCount > 0 ? totalRevenue / ordersCount : 0, 1, 2)}">₹0.00</h4>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-3 border rounded bg-light">
+                        <h6 class="text-muted small text-uppercase">Taxes (GST 5%)</h6>
+                        <h4 class="fw-bold text-dark-bean mb-0" th:text="'₹' + ${#numbers.formatDecimal(totalRevenue * 0.05, 1, 2)}">₹0.00</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ChartJS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', () => {
+            // Daily Sales Chart Setup
+            const dailyLabels = /*[[${dailySalesLabels}]]*/ [];
+            const dailyData = /*[[${dailySalesData}]]*/ [];
+
+            const ctxDaily = document.getElementById('dailySalesChart').getContext('2d');
+            new Chart(ctxDaily, {
+                type: 'line',
+                data: {
+                    labels: dailyLabels,
+                    datasets: [{
+                        label: 'Grand Total (₹)',
+                        data: dailyData,
+                        fill: true,
+                        backgroundColor: 'rgba(212, 175, 55, 0.15)',
+                        borderColor: '#D4AF37',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        pointBackgroundColor: '#3E2723',
+                        pointBorderColor: '#D4AF37',
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // Product Performance Chart Setup
+            const prodLabels = /*[[${productPerformanceLabels}]]*/ [];
+            const prodData = /*[[${productPerformanceData}]]*/ [];
+
+            const ctxProd = document.getElementById('productPerformanceChart').getContext('2d');
+            new Chart(ctxProd, {
+                type: 'doughnut',
+                data: {
+                    labels: prodLabels,
+                    datasets: [{
+                        data: prodData,
+                        backgroundColor: [
+                            '#3E2723',
+                            '#D4AF37',
+                            '#5D4037',
+                            '#8D6E63',
+                            '#D7CCC8',
+                            '#1E1210',
+                            '#E5A93B',
+                            '#A1887F',
+                            '#E0F2F1',
+                            '#FFE0B2',
+                            '#F8BBD0',
+                            '#C8E6C9'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                boxWidth: 12,
+                                font: { size: 10 }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        /*]]>*/
+    </script>
+
+    <!-- Footer Include -->
+    <footer th:replace="~{layout/base :: footer}"></footer>
+
+</body>
+</html>

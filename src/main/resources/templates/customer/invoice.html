@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Coffee & Co</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css(v=2.0)}">
+    
+    <style>
+        @media print {
+            body {
+                background-color: white !important;
+                color: black !important;
+            }
+            .no-print, header, footer, .btn, hr {
+                display: none !important;
+            }
+            .invoice-wrapper {
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+            .invoice-header {
+                background-color: #3E2723 !important;
+                color: #D4AF37 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body style="background-color: var(--bg-cream);">
+
+    <!-- Header Navbar -->
+    <header class="no-print" th:replace="~{layout/base :: navbar}"></header>
+
+    <main class="container my-4">
+        
+        <!-- Print / Back buttons -->
+        <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+            <a th:href="@{/shop}" class="btn btn-outline-gold"><i class="fa-solid fa-arrow-left me-2"></i>Back to Menu</a>
+            <div>
+                <button onclick="window.print()" class="btn btn-gold"><i class="fa-solid fa-print me-2"></i>Print Invoice</button>
+                <a th:href="@{/orders}" class="btn btn-dark-coffee ms-2"><i class="fa-solid fa-clock-rotate-left me-2"></i>History</a>
+            </div>
+        </div>
+
+        <!-- Invoice Wrapper -->
+        <div class="invoice-wrapper">
+            <!-- Header -->
+            <div class="invoice-header d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <div class="d-flex align-items-center mb-3 mb-md-0">
+                    <img th:src="@{/images/logo.png}" alt="Coffee & Co Logo" class="invoice-logo me-3">
+                    <div>
+                        <h2 class="m-0 text-gold">Coffee & Co</h2>
+                        <p class="m-0 small" style="opacity: 0.85;">Est. 2026 • Artisanal Brewing</p>
+                    </div>
+                </div>
+                <div class="text-md-end">
+                    <h4 class="text-gold uppercase mb-1">INVOICE</h4>
+                    <p class="m-0 small" th:text="'Bill No: ' + ${order.billNumber}">Bill No: CC-000000</p>
+                    <p class="m-0 small" th:text="'Date: ' + ${#temporals.format(order.orderDate, 'dd MMM yyyy, hh:mm a')}">Date: 15 July 2026</p>
+                </div>
+            </div>
+
+            <!-- Details Body -->
+            <div class="invoice-body">
+                <!-- Customer Details -->
+                <div class="row mb-4">
+                    <div class="col-sm-6">
+                        <h6 class="text-muted text-uppercase small">Billed To:</h6>
+                        <h5 class="text-dark-bean fw-bold mb-1" th:text="${order.user.fullName}">Customer Name</h5>
+                        <p class="text-muted m-0 small" th:text="'Email: ' + ${order.user.email}">customer@example.com</p>
+                        <p class="text-muted m-0 small" th:text="'Phone: ' + ${order.user.phone}">+1 (555) 000-0000</p>
+                    </div>
+                    <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                        <h6 class="text-muted text-uppercase small">Cafe Terminal:</h6>
+                        <h5 class="text-dark-bean fw-bold mb-1">Main Counter</h5>
+                        <p class="text-muted m-0 small">Server: Counter Operator</p>
+                        <span class="badge mt-2" 
+                              th:classappend="${order.status == 'COMPLETED'} ? 'bg-success' : (${order.status == 'PENDING'} ? 'bg-warning text-dark' : 'bg-danger')"
+                              th:text="${order.status}">
+                            PENDING
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Products Table -->
+                <div class="table-responsive">
+                    <table class="table invoice-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Item Description</th>
+                                <th scope="col" class="text-center">Price</th>
+                                <th scope="col" class="text-center">Qty</th>
+                                <th scope="col" class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item, stat : ${order.items}">
+                                <td th:text="${stat.index + 1}">1</td>
+                                <td>
+                                    <div class="fw-bold text-dark-bean" th:text="${item.product.name}">Product Name</div>
+                                    <small class="text-muted" th:text="${item.product.category.name}">Category</small>
+                                </td>
+                                <td class="text-center" th:text="'₹' + ${#numbers.formatDecimal(item.price, 1, 2)}">₹0.00</td>
+                                <td class="text-center" th:text="${item.quantity}">0</td>
+                                <td class="text-end fw-bold text-dark-bean" th:text="'₹' + ${#numbers.formatDecimal(item.price * item.quantity, 1, 2)}">₹0.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Totals -->
+                <div class="row justify-content-end mt-4">
+                    <div class="col-md-5">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Subtotal:</span>
+                            <span class="fw-bold" th:text="'₹' + ${#numbers.formatDecimal(order.subTotal, 1, 2)}">₹0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">GST (5%):</span>
+                            <span class="fw-bold" th:text="'₹' + ${#numbers.formatDecimal(order.gstAmount, 1, 2)}">₹0.00</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="h5 fw-bold text-dark-bean">Grand Total:</span>
+                            <span class="h5 fw-bold text-gold" th:text="'₹' + ${#numbers.formatDecimal(order.grandTotal, 1, 2)}">₹0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Message -->
+            <div class="invoice-footer">
+                <p class="mb-1 text-gold fw-bold" style="font-size: 1.15rem;">Thank You for dining with Coffee & Co!</p>
+                <p class="m-0 text-muted small">Please visit us again. Have a beautiful coffee-filled day!</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Include -->
+    <footer class="no-print" th:replace="~{layout/base :: footer}"></footer>
+
+</body>
+</html>

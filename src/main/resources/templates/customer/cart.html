@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: html_head('Shopping Cart')}"></head>
+<body>
+
+    <!-- Header Navbar -->
+    <header th:replace="~{layout/base :: navbar}"></header>
+
+    <main class="container my-4">
+        
+        <h2 class="text-dark-bean mb-4"><i class="fa-solid fa-shopping-cart text-gold me-2"></i>My Order Cart</h2>
+
+        <!-- Alert notifications -->
+        <div th:if="${error != null}" class="alert alert-danger alert-dismissible fade show border-0 my-3" role="alert" style="background-color: rgba(220, 53, 69, 0.15); color: #B33939; border-radius: 12px;">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            <span th:text="${error}">Error Message</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div th:if="${cart.items.isEmpty()}" class="text-center py-5 glass-card p-5">
+            <i class="fa-solid fa-cart-arrow-down fa-4x text-gold mb-3"></i>
+            <h3>Your cart is empty</h3>
+            <p class="text-muted">Explore our signature menu and add items to your cart.</p>
+            <a th:href="@{/shop}" class="btn btn-gold mt-3"><i class="fa-solid fa-mug-hot me-2"></i>View Menu</a>
+        </div>
+
+        <div class="row g-4" th:if="${!cart.items.isEmpty()}">
+            <!-- Cart Items List -->
+            <div class="col-lg-8">
+                <div class="glass-card p-4">
+                    <div class="table-responsive">
+                        <table class="table align-middle cart-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="border-radius: 10px 0 0 0;">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col" style="border-radius: 0 10px 0 0;">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item : ${cart.items}">
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img th:src="${item.product.imagePath}" th:alt="${item.product.name}" class="cart-item-img me-3">
+                                            <div>
+                                                <h6 class="mb-0 text-dark-bean fw-bold" th:text="${item.product.name}">Product Name</h6>
+                                                <small class="text-muted" th:text="${item.product.category.name}">Category</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="fw-bold" th:text="'₹' + ${#numbers.formatDecimal(item.product.price, 1, 2)}">₹0.00</td>
+                                    <td>
+                                        <form th:action="@{/cart/update}" method="POST" class="d-flex align-items-center">
+                                            <input type="hidden" name="productId" th:value="${item.product.id}">
+                                            <div class="quantity-control">
+                                                <button type="submit" name="quantity" th:value="${item.quantity - 1}" class="quantity-btn"><i class="fa-solid fa-minus"></i></button>
+                                                <input type="text" class="quantity-input" th:value="${item.quantity}" readonly>
+                                                <button type="submit" name="quantity" th:value="${item.quantity + 1}" class="quantity-btn"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td class="fw-bold text-dark-bean" th:text="'₹' + ${#numbers.formatDecimal(item.getSubTotal(), 1, 2)}">₹0.00</td>
+                                    <td>
+                                        <a th:href="@{/cart/remove/{productId}(productId=${item.product.id})}" class="btn btn-outline-danger btn-sm border-0"><i class="fa-solid fa-trash-can"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <a th:href="@{/shop}" class="btn btn-outline-gold"><i class="fa-solid fa-arrow-left me-2"></i>Continue Shopping</a>
+                        <a th:href="@{/cart/clear}" class="btn btn-outline-danger"><i class="fa-solid fa-trash me-2"></i>Clear Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="col-lg-4">
+                <div class="glass-card p-4">
+                    <h4 class="text-dark-bean mb-4 border-bottom pb-2">Order Summary</h4>
+                    
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Subtotal</span>
+                        <span class="fw-bold" th:text="'₹' + ${#numbers.formatDecimal(cart.getSubTotal(), 1, 2)}">₹0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">GST (5%)</span>
+                        <span class="fw-bold" th:text="'₹' + ${#numbers.formatDecimal(cart.getGstAmount(), 1, 2)}">₹0.00</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="h5 text-dark-bean fw-bold">Grand Total</span>
+                        <span class="h5 text-gold fw-bold" th:text="'₹' + ${#numbers.formatDecimal(cart.getGrandTotal(), 1, 2)}">₹0.00</span>
+                    </div>
+
+                    <form th:action="@{/checkout}" method="POST">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-gold py-3"><i class="fa-solid fa-credit-card me-2"></i>Place Order & Generate Bill</button>
+                        </div>
+                    </form>
+
+                    <div class="mt-4 p-3 bg-light rounded text-center small text-muted">
+                        <i class="fa-solid fa-shield-halved text-gold me-2"></i>Secure cafe checkout terminal. Cash or card accepted on counter.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Include -->
+    <footer th:replace="~{layout/base :: footer}"></footer>
+
+</body>
+</html>

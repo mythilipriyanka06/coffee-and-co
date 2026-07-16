@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: html_head('Admin Dashboard')}"></head>
+<body>
+
+    <!-- Header Navbar -->
+    <header th:replace="~{layout/base :: navbar}"></header>
+
+    <main class="container my-4">
+        
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-8">
+                <h2 class="text-dark-bean m-0"><i class="fa-solid fa-chart-line text-gold me-2"></i>Dashboard Control Panel</h2>
+                <p class="text-muted m-0">Welcome back, <span th:text="${session.user.fullName}">Admin</span>. Here is your cafe performance overview.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <span class="badge bg-gold text-dark-bean p-2 px-3 fw-bold" style="font-size: 0.9rem;">
+                    <i class="fa-solid fa-calendar-day me-1"></i>
+                    <span th:text="${#temporals.format(#temporals.createNow(), 'dd MMM yyyy')}">Date</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+            <!-- Total Revenue -->
+            <div class="col">
+                <div class="card glass-card stat-card h-100 p-3" style="border-left-color: var(--secondary);">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase small">Total Revenue</h6>
+                            <h3 class="fw-bold text-dark-bean m-0"
+                                th:text="'₹' + ${#numbers.formatDecimal(totalRevenue, 1, 2)}">₹0.00</h3>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Total Orders -->
+            <div class="col">
+                <div class="card glass-card stat-card h-100 p-3" style="border-left-color: #2980b9;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase small">Total Orders</h6>
+                            <h3 class="fw-bold text-dark-bean m-0" th:text="${totalOrders}">0</h3>
+                        </div>
+                        <div class="stat-icon" style="color: #2980b9;"><i class="fa-solid fa-receipt"></i></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Total Products -->
+            <div class="col">
+                <div class="card glass-card stat-card h-100 p-3" style="border-left-color: #27ae60;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase small">Total Products</h6>
+                            <h3 class="fw-bold text-dark-bean m-0" th:text="${totalProducts}">0</h3>
+                        </div>
+                        <div class="stat-icon" style="color: #27ae60;"><i class="fa-solid fa-mug-hot"></i></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pending Orders -->
+            <div class="col">
+                <div class="card glass-card stat-card h-100 p-3" style="border-left-color: #e67e22;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase small">Pending Orders</h6>
+                            <h3 class="fw-bold text-dark-bean m-0" th:text="${pendingOrders}">0</h3>
+                        </div>
+                        <div class="stat-icon" style="color: #e67e22;"><i class="fa-solid fa-clock"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Analytics Chart -->
+            <div class="col-lg-8">
+                <div class="card glass-card p-4 h-100">F
+                    <h5 class="text-dark-bean mb-4 fw-bold">Revenue by Category</h5>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="categoryRevenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Sellers -->
+            <div class="col-lg-4">
+                <div class="card glass-card p-4 h-100">
+                    <h5 class="text-dark-bean mb-4 fw-bold">Best Selling Products</h5>
+                    <div th:if="${bestSellers.isEmpty()}" class="text-center py-4">
+                        <p class="text-muted">No completed sales yet.</p>
+                    </div>
+                    <ul class="list-group list-group-flush" th:if="${!bestSellers.isEmpty()}">
+                        <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center py-3 border-bottom" th:each="entry : ${bestSellers}">
+                            <div class="d-flex align-items-center">
+                                <img th:src="${entry.key.imagePath}"
+     class="rounded-3 me-3 shadow-sm"
+     style="width:80px;height:80px;object-fit:cover;border:2px solid #D4AF37;background:#fff;"
+     alt="Product">
+                                <div>
+                                    <h6 class="m-0 fw-bold text-dark-bean" th:text="${entry.key.name}">Product</h6>
+                                    <small class="text-muted" th:text="${entry.key.category.name}">Category</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-gold text-dark-bean rounded-pill p-2" th:text="${entry.value} + ' Sold'">0 sold</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders Table -->
+        <div class="card glass-card p-4 mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-dark-bean fw-bold m-0">Recent Orders</h5>
+                <a th:href="@{/admin/orders}" class="btn btn-sm btn-outline-gold">View All Orders</a>
+            </div>
+            <div th:if="${recentOrders.isEmpty()}" class="text-center py-4">
+                <p class="text-muted m-0">No orders registered yet.</p>
+            </div>
+            <div class="table-responsive" th:if="${!recentOrders.isEmpty()}">
+                <table class="table align-middle">
+                    <thead>
+                        <tr class="table-dark text-gold">
+                            <th scope="col" style="border-radius: 10px 0 0 0;">Bill Number</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" style="border-radius: 0 10px 0 0;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="order : ${recentOrders}">
+                            <td class="fw-bold" th:text="${order.billNumber}">CC-0000</td>
+                            <td th:text="${order.user.fullName}">Customer</td>
+                            <td th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, hh:mm a')}">Date</td>
+                            <td class="fw-bold text-dark-bean"
+                                th:text="'₹' + ${#numbers.formatDecimal(order.grandTotal, 1, 2)}">₹0.00</td>
+                                <span th:if="${order.status == 'PENDING'}" class="badge bg-warning text-dark"><i class="fa-solid fa-spinner fa-spin me-1"></i>Pending</span>
+                                <span th:if="${order.status == 'COMPLETED'}" class="badge bg-success"><i class="fa-solid fa-circle-check me-1"></i>Completed</span>
+                                <span th:if="${order.status == 'CANCELLED'}" class="badge bg-danger"><i class="fa-solid fa-circle-xmark me-1"></i>Cancelled</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/invoice/{billNumber}(billNumber=${order.billNumber})}" class="btn btn-sm btn-outline-gold py-1">
+                                    <i class="fa-solid fa-receipt me-1"></i>Invoice
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ChartJS and Thymeleaf Script Config -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', () => {
+            const labels = /*[[${chartLabels}]]*/ [];
+            const data = /*[[${chartData}]]*/ [];
+
+            const ctx = document.getElementById('categoryRevenueChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Revenue (₹)',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(62, 39, 35, 0.7)',
+                            'rgba(212, 175, 55, 0.7)',
+                            'rgba(93, 64, 55, 0.7)',
+                            'rgba(141, 110, 99, 0.7)',
+                            'rgba(215, 204, 200, 0.7)',
+                            'rgba(30, 18, 16, 0.7)'
+                        ],
+                        borderColor: [
+                            '#3E2723',
+                            '#D4AF37',
+                            '#5D4037',
+                            '#8D6E63',
+                            '#D7CCC8',
+                            '#1E1210'
+                        ],
+                        borderWidth: 1.5,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        /*]]>*/
+    </script>
+
+    <!-- Footer Include -->
+    <footer th:replace="~{layout/base :: footer}"></footer>
+
+</body>
+</html>
