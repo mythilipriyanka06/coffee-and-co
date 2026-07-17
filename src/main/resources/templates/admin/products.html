@@ -45,7 +45,7 @@
                         <tr th:each="prod : ${products}">
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img th:src="${prod.imagePath}" class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover; border: 1px solid var(--primary-soft);">
+                                    <img th:src="@{${prod.imagePath}}" class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover; border: 1px solid var(--primary-soft);">
                                     <div>
                                         <h6 class="mb-0 fw-bold text-dark-bean" th:text="${prod.name}">Product Name</h6>
                                         <small class="text-muted d-block" th:text="${#strings.abbreviate(prod.description, 45)}">Description</small>

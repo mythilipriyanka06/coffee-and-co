@@ -95,7 +95,7 @@
                     <ul class="list-group list-group-flush" th:if="${!bestSellers.isEmpty()}">
                         <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center py-3 border-bottom" th:each="entry : ${bestSellers}">
                             <div class="d-flex align-items-center">
-                                <img th:src="${entry.key.imagePath}"
+                                <img th:src="@{${entry.key.imagePath}}"
      class="rounded-3 me-3 shadow-sm"
      style="width:80px;height:80px;object-fit:cover;border:2px solid #D4AF37;background:#fff;"
      alt="Product">

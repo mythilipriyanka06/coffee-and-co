@@ -43,7 +43,7 @@
                                 <tr th:each="item : ${cart.items}">
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img th:src="${item.product.imagePath}" th:alt="${item.product.name}" class="cart-item-img me-3">
+                                            <img th:src="@{${item.product.imagePath}}" th:alt="${item.product.name}" class="cart-item-img me-3">
                                             <div>
                                                 <h6 class="mb-0 text-dark-bean fw-bold" th:text="${item.product.name}">Product Name</h6>
                                                 <small class="text-muted" th:text="${item.product.category.name}">Category</small>

@@ -27,7 +27,7 @@
                     <div id="offersCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
                         <div class="carousel-inner" th:each="offer, iterStat : ${offers}">
                             <div class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active' : ''">
-                                <img th:src="${offer.imagePath}" class="d-block w-100" alt="Offer" style="border-radius: 12px;">
+                                <img th:src="@{${offer.imagePath}}" class="d-block w-100" alt="Offer" style="border-radius: 12px;">
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5 th:text="${offer.title}">Special Offer</h5>
                                     <p th:text="${offer.description}">Description</p>
@@ -95,7 +95,7 @@
             <div class="col product-card-wrapper" th:each="prod : ${products}">
                 <div class="card glass-card product-card h-100">
                     <div class="product-img-wrapper">
-                        <img th:src="${prod.imagePath}" class="product-img" th:alt="${prod.name}">
+                        <img th:src="@{${prod.imagePath}}" class="product-img" th:alt="${prod.name}">
                         <span class="product-category-badge" th:text="${prod.category.name}">Category</span>
                     </div>
                     <div class="card-body d-flex flex-column">

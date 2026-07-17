@@ -156,19 +156,19 @@ public class DatabaseSeeder implements CommandLineRunner {
             {"Cappuccino",                  "Hot Coffee", "Espresso, steamed milk, and fluffy milk foam – a café classic.", 180.00, 70,  "/images/products/vanilla_cappuccino.jpg"},
             {"Latte",                       "Hot Coffee", "Espresso combined with steamed milk and a light layer of velvety foam.", 190.00, 70,  "/images/products/classic_latte.jpg"},
             {"Caramel Latte",               "Hot Coffee", "Rich espresso, steamed milk, and sweet caramel syrup, topped with velvety foam.", 220.00, 60,  "/images/products/caramel_latte.jpg"},
-            {"Mocha",                       "Hot Coffee", "A chocolatey delight combining smooth espresso, steamed milk, and decadent mocha sauce.", 230.00, 55,  "/images/products/mocha_bliss.jpg"},
+            {"Mocha",                       "Hot Coffee", "A chocolatey delight combining smooth espresso, steamed milk, and decadent mocha sauce.", 220.00, 55,  "/images/products/mocha_bliss.jpg"},
             {"Flat White",                  "Hot Coffee", "Velvety microfoam espresso drink with a bold coffee-to-milk ratio.", 200.00, 50,  "/images/products/flat_white.jpg"},
             {"Hazelnut Latte",              "Hot Coffee", "Espresso with creamy steamed milk and a rich nutty hazelnut syrup swirl.", 230.00, 50,  "/images/products/hazelnut_latte.jpg"},
             {"Vanilla Latte",               "Hot Coffee", "Smooth espresso with steamed milk and sweet vanilla syrup.", 220.00, 60,  "/images/products/vanilla_latte.jpg"},
-            {"Irish Coffee",                "Hot Coffee", "Hot coffee with a rich non-alcoholic Irish cream flavour, topped with cream.", 240.00, 35,  "/images/products/irish_coffee.jpg"},
+            {"Irish Coffee",                "Hot Coffee", "Hot coffee with a rich non-alcoholic Irish cream flavour, topped with cream.", 260.00, 35,  "/images/products/irish_coffee.jpg"},
             {"Filter Coffee",               "Hot Coffee", "Classic South Indian drip filter coffee, strong and aromatic.", 90.00,  100, "/images/products/filter_coffee.jpg"},
             {"South Indian Degree Coffee",  "Hot Coffee", "Traditional frothy South Indian coffee made with chicory-blend decoction and warm milk.", 110.00, 90,  "/images/products/south_indian_coffee.jpg"},
 
             // ════════════════════════════════════════
             // 🧊  COLD COFFEE  (10 items)
             // ════════════════════════════════════════
-            {"Cold Coffee",                 "Cold Coffee", "Chilled milk blended with espresso for a refreshing iced coffee.", 180.00, 70,  "/images/products/cold_coffee.jpg"},
-            {"Cold Mocha",                  "Cold Coffee", "Iced espresso blended with rich chocolate milk and cocoa syrup.", 220.00, 55,  "/images/products/cold_mocha.jpg"},
+            {"Classic Cold Coffee",         "Cold Coffee", "Chilled milk blended with espresso for a refreshing iced coffee.", 180.00, 70,  "/images/products/cold_coffee.jpg"},
+            {"Chocolate Cold Coffee",       "Cold Coffee", "Iced espresso blended with rich chocolate milk and cocoa syrup.", 240.00, 55,  "/images/products/cold_mocha.jpg"},
             {"Iced Americano",              "Cold Coffee", "Espresso shots poured over ice with cold water – clean and refreshing.", 170.00, 65,  "/images/products/iced_americano.jpg"},
             {"Iced Latte",                  "Cold Coffee", "Chilled milk and espresso poured over ice for a smooth cold coffee.", 200.00, 60,  "/images/products/iced_latte.jpg"},
             {"Caramel Frappe",              "Cold Coffee", "Blended ice, premium espresso, milk, and caramel syrup topped with cream.", 240.00, 50,  "/images/products/caramel_frappe.jpg"},
@@ -207,8 +207,8 @@ public class DatabaseSeeder implements CommandLineRunner {
             // ════════════════════════════════════════
             // 🍰  DESSERTS  (10 items)
             // ════════════════════════════════════════
-            {"Chocolate Brownie",           "Desserts", "Warm, fudgy chocolate brownie loaded with Belgian chocolate chunks.", 160.00, 40,  "/images/products/chocolate_brownie.jpg"},
-            {"Brownie with Ice Cream",      "Desserts", "Warm chocolate brownie served with a scoop of vanilla ice cream.", 240.00, 30,  "/images/products/brownie_ice_cream.jpg"},
+            {"Brownie",                     "Desserts", "Warm, fudgy chocolate brownie loaded with Belgian chocolate chunks.", 180.00, 40,  "/images/products/chocolate_brownie.jpg"},
+            {"Brownie with Ice Cream",      "Desserts", "Warm chocolate brownie served with a scoop of vanilla ice cream.", 250.00, 30,  "/images/products/brownie_ice_cream.jpg"},
             {"Cheesecake",                  "Desserts", "Classic creamy baked cheesecake with a buttery graham cracker crust.", 260.00, 25,  "/images/products/cheesecake.jpg"},
             {"Red Velvet Cake",             "Desserts", "Decadent red velvet cake layers with luscious cream cheese frosting.", 240.00, 25,  "/images/products/red_velvet_cake.jpg"},
             {"Tiramisu",                    "Desserts", "Italian layered dessert with espresso-soaked ladyfingers and mascarpone cream.", 280.00, 20,  "/images/products/tiramisu.jpg"},
@@ -221,24 +221,24 @@ public class DatabaseSeeder implements CommandLineRunner {
             // ════════════════════════════════════════
             // 🥐  SNACKS  (10 items)
             // ════════════════════════════════════════
-            {"French Fries",                "Snacks", "Crispy, golden potato fries seasoned with salt.", 120.00, 80,  "/images/products/french_fries.jpg"},
-            {"Peri Peri Fries",             "Snacks", "Crispy fries tossed in spicy peri peri masala for a fiery kick.", 160.00, 70,  "/images/products/peri_peri_fries.jpg"},
+            {"French Fries",                "Snacks", "Crispy, golden potato fries seasoned with salt.", 150.00, 80,  "/images/products/french_fries.jpg"},
+            {"Peri Peri Fries",             "Snacks", "Crispy fries tossed in spicy peri peri masala for a fiery kick.", 180.00, 70,  "/images/products/peri_peri_fries.jpg"},
             {"Garlic Bread",                "Snacks", "Warm toasted bread spread with garlic butter and fresh herbs.", 140.00, 60,  "/images/products/garlic_bread.jpg"},
-            {"Cheese Garlic Bread",         "Snacks", "Garlic herb bread loaded with melted mozzarella and cheddar cheese.", 180.00, 55,  "/images/products/cheese_garlic_bread.jpg"},
+            {"Cheese Garlic Bread",         "Snacks", "Garlic herb bread loaded with melted mozzarella and cheddar cheese.", 220.00, 55,  "/images/products/cheese_garlic_bread.jpg"},
             {"Veg Puff",                    "Snacks", "Flaky pastry filled with spiced mixed vegetables – a café classic.", 60.00, 100, "/images/products/veg_puff.jpg"},
             {"Paneer Puff",                 "Snacks", "Buttery pastry filled with seasoned cottage cheese and herbs.", 80.00, 90,  "/images/products/paneer_puff.jpg"},
             {"Veg Roll",                    "Snacks", "Spiced vegetables wrapped in a soft, flaky roll.", 120.00, 70,  "/images/products/veg_roll.jpg"},
             {"Spring Roll",                 "Snacks", "Crispy golden spring rolls filled with stir-fried vegetables.", 160.00, 65,  "/images/products/spring_roll.jpg"},
             {"Nachos",                      "Snacks", "Crispy tortilla chips served with salsa, cheese dip, and jalapeños.", 180.00, 55,  "/images/products/nachos.jpg"},
-            {"Popcorn",                     "Snacks", "Light and crunchy salted or buttered popcorn – perfect café snack.", 100.00, 80,  "/images/products/popcorn.jpg"},
+            {"Popcorn",                     "Snacks", "Light and crunchy salted or buttered popcorn – perfect café snack.", 120.00, 80,  "/images/products/popcorn.jpg"},
 
             // ════════════════════════════════════════
             // 🥪  SANDWICHES  (10 items)
             // ════════════════════════════════════════
-            {"Veg Sandwich",                "Sandwiches", "Grated veggies and cheese spread inside toasted bread slices.", 140.00, 60,  "/images/products/veg_sandwich.jpg"},
+            {"Veg Sandwich",                "Sandwiches", "Grated veggies and cheese spread inside toasted bread slices.", 170.00, 60,  "/images/products/veg_sandwich.jpg"},
             {"Grilled Veg Sandwich",        "Sandwiches", "Fresh vegetables with cheese grilled to golden perfection.", 180.00, 55,  "/images/products/grilled_veg_sandwich.jpg"},
-            {"Cheese Sandwich",             "Sandwiches", "Loaded with melted processed cheese between buttered toasted bread.", 170.00, 55,  "/images/products/cheese_sandwich.jpg"},
-            {"Paneer Sandwich",             "Sandwiches", "Spiced cottage cheese filling grilled in soft sandwich bread.", 190.00, 50,  "/images/products/paneer_sandwich.jpg"},
+            {"Grilled Cheese Sandwich",     "Sandwiches", "Loaded with melted processed cheese between buttered toasted bread.", 210.00, 55,  "/images/products/cheese_sandwich.jpg"},
+            {"Paneer Sandwich",             "Sandwiches", "Spiced cottage cheese filling grilled in soft sandwich bread.", 230.00, 50,  "/images/products/paneer_sandwich.jpg"},
             {"Corn Cheese Sandwich",        "Sandwiches", "Creamy sweet corn and mozzarella cheese grilled sandwich.", 180.00, 50,  "/images/products/corn_cheese_sandwich.jpg"},
             {"Club Sandwich",               "Sandwiches", "Triple-decker toasted sandwich with veggies, cheese, and mayo.", 220.00, 40,  "/images/products/club_sandwich.jpg"},
             {"Mexican Sandwich",            "Sandwiches", "Spiced black beans, jalapeños, salsa, and cheese in toasted bread.", 210.00, 40,  "/images/products/mexican_sandwich.jpg"},
@@ -249,9 +249,9 @@ public class DatabaseSeeder implements CommandLineRunner {
             // ════════════════════════════════════════
             // 🍕  PIZZA  (10 items)
             // ════════════════════════════════════════
-            {"Margherita",                  "Pizza", "Classic pizza topped with fresh tomato sauce, mozzarella, and basil.", 220.00, 40,  "/images/products/margherita_pizza.jpg"},
+            {"Margherita Pizza",            "Pizza", "Classic pizza topped with fresh tomato sauce, mozzarella, and basil.", 280.00, 40,  "/images/products/margherita_pizza.jpg"},
             {"Veg Delight",                 "Pizza", "Loaded with bell peppers, onions, sweet corn, and mushrooms.", 260.00, 35,  "/images/products/veg_delight_pizza.jpg"},
-            {"Farmhouse",                   "Pizza", "Topped with fresh tomatoes, capsicum, onions, and mushrooms.", 320.00, 30,  "/images/products/farmhouse_pizza.jpg"},
+            {"Farmhouse Pizza",             "Pizza", "Topped with fresh tomatoes, capsicum, onions, and mushrooms.", 360.00, 30,  "/images/products/farmhouse_pizza.jpg"},
             {"Paneer Tikka Pizza",          "Pizza", "Marinated paneer tikka on a tangy tomato base with onions and peppers.", 340.00, 25,  "/images/products/paneer_tikka_pizza.jpg"},
             {"Cheese Burst Pizza",          "Pizza", "Crust filled with molten cheese with a rich mozzarella topping.", 360.00, 20,  "/images/products/cheese_burst_pizza.jpg"},
             {"Corn Pizza",                  "Pizza", "Sweet corn and capsicum on a herbed tomato sauce with mozzarella.", 260.00, 30,  "/images/products/corn_pizza.jpg"},
@@ -263,8 +263,8 @@ public class DatabaseSeeder implements CommandLineRunner {
             // ════════════════════════════════════════
             // 🍔  BURGERS  (10 items)
             // ════════════════════════════════════════
-            {"Veg Burger",                  "Burger", "Crispy veg patty with lettuce, tomato, onions, and burger sauce in a soft bun.", 120.00, 60,  "/images/products/veg_burger.jpg"},
-            {"Cheese Burger",               "Burger", "Juicy patty with a melted cheese slice, lettuce, and pickles.", 160.00, 55,  "/images/products/cheese_burger.jpg"},
+            {"Veg Burger",                  "Burger", "Crispy veg patty with lettuce, tomato, onions, and burger sauce in a soft bun.", 170.00, 60,  "/images/products/veg_burger.jpg"},
+            {"Cheese Burger",               "Burger", "Juicy patty with a melted cheese slice, lettuce, and pickles.", 220.00, 55,  "/images/products/cheese_burger.jpg"},
             {"Paneer Burger",               "Burger", "Spiced paneer tikka patty with mint chutney and fresh veggies.", 190.00, 45,  "/images/products/paneer_burger.jpg"},
             {"Aloo Tikki Burger",           "Burger", "Classic Indian-style aloo tikki patty with tangy tamarind chutney.", 140.00, 60,  "/images/products/aloo_tikki_burger.jpg"},
             {"Mexican Burger",              "Burger", "Spicy black bean patty with jalapeños, salsa, and cheese.", 210.00, 40,  "/images/products/mexican_burger.jpg"},
@@ -277,8 +277,8 @@ public class DatabaseSeeder implements CommandLineRunner {
             // ════════════════════════════════════════
             // 🍝  PASTA  (10 items)
             // ════════════════════════════════════════
-            {"White Sauce Pasta",           "Pasta", "Penne pasta tossed in a rich, creamy Béchamel Alfredo sauce.", 220.00, 35,  "/images/products/white_sauce_pasta.jpg"},
-            {"Red Sauce Pasta",             "Pasta", "Penne pasta cooked in a tangy and spicy Italian tomato basil sauce.", 210.00, 35,  "/images/products/red_sauce_pasta.jpg"},
+            {"White Sauce Pasta",           "Pasta", "Penne pasta tossed in a rich, creamy Béchamel Alfredo sauce.", 290.00, 35,  "/images/products/white_sauce_pasta.jpg"},
+            {"Red Sauce Pasta",             "Pasta", "Penne pasta cooked in a tangy and spicy Italian tomato basil sauce.", 280.00, 35,  "/images/products/red_sauce_pasta.jpg"},
             {"Pink Sauce Pasta",            "Pasta", "Perfectly balanced mix of tomato and creamy white sauce with pasta.", 230.00, 30,  "/images/products/pink_sauce_pasta.jpg"},
             {"Alfredo Pasta",               "Pasta", "Fettuccine in a velvety Parmesan and butter cream sauce.", 260.00, 25,  "/images/products/alfredo_pasta.jpg"},
             {"Arrabbiata Pasta",            "Pasta", "Penne in a fiery, garlicky tomato chilli sauce.", 240.00, 30,  "/images/products/arrabbiata_pasta.jpg"},
@@ -343,7 +343,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             {"Banana Bread",                "Bakery", "Moist and flavourful loaf baked with ripe bananas and a touch of cinnamon.", 130.00, 40,  "/images/products/banana_bread.jpg"},
             {"Cookies",                     "Bakery", "Freshly baked chocolate chip cookies – crispy outside, chewy inside.", 80.00,  70,  "/images/products/cookies.jpg"},
             {"Garlic Bun",                  "Bakery", "Soft baked bun brushed with garlic butter and dried herbs.", 90.00,  65,  "/images/products/garlic_bun.jpg"},
-            {"Brownie",                     "Desserts", "Rich chocolate brownie, dense and fudgy.", 160.00, 50, "/images/combos/brownie.jpg"},
+            {"Brownie Bake",                "Desserts", "Rich chocolate brownie, dense and fudgy.", 180.00, 50, "/images/combos/brownie.jpg"},
             {"Cheese Tart",                 "Desserts", "Creamy, decadent cheese tart in a crisp pastry shell.", 180.00, 50, "/images/combos/cheese_tart.jpg"},
             {"Scone",                       "Bakery", "Traditional English scone, golden baked and perfect with jam and cream.", 120.00, 50, "/images/combos/scone.jpg"},
             {"Cold Brew",                   "Cold Coffee", "Smooth and refreshing cold brew coffee.", 150.00, 50, "/images/combos/cold_brew.jpg"},
@@ -370,6 +370,13 @@ public class DatabaseSeeder implements CommandLineRunner {
         legacyAliases.put("hazelnut cold brew", "hazelnut cold brew");
         legacyAliases.put("coconut espresso", "coconut espresso");
         legacyAliases.put("matcha latte",     "matcha latte");
+        legacyAliases.put("classic cold coffee", "cold coffee");
+        legacyAliases.put("chocolate cold coffee", "cold mocha");
+        legacyAliases.put("grilled cheese sandwich", "cheese sandwich");
+        legacyAliases.put("margherita pizza", "margherita");
+        legacyAliases.put("farmhouse pizza", "farmhouse");
+        legacyAliases.put("brownie", "chocolate brownie");
+        legacyAliases.put("brownie bake", "brownie");
 
         int added = 0, updated = 0, skipped = 0;
 
