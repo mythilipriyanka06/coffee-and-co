@@ -154,4 +154,64 @@ public class CustomerController {
         model.addAttribute("order", order);
         return "customer/invoice";
     }
+
+    @GetMapping("/product/order/{id}")
+    public String orderProduct(@PathVariable("id") Long id, HttpSession session, RedirectAttributes redirectAttributes) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            redirectAttributes.addFlashAttribute("error", "Product not found!");
+            return "redirect:/shop";
+        }
+
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            session.setAttribute("redirectUrl", "/product/order/" + id);
+            return "redirect:/login?error=Please login to order.";
+        }
+
+        Cart cart = getOrCreateCart(session);
+        cart.addItem(product, 1);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/cart/add-combo")
+    @ResponseBody
+    public String addComboToCart(@RequestParam("item1") String item1,
+                                 @RequestParam("item2") String item2,
+                                 HttpSession session) {
+        List<Product> products1 = productService.searchProducts(item1);
+        List<Product> products2 = productService.searchProducts(item2);
+
+        Product p1 = null;
+        for (Product p : products1) {
+            if (p.getName().toLowerCase().contains(item1.toLowerCase())) {
+                p1 = p;
+                break;
+            }
+        }
+        if (p1 == null && !products1.isEmpty()) p1 = products1.get(0);
+
+        Product p2 = null;
+        for (Product p : products2) {
+            if (p.getName().toLowerCase().contains(item2.toLowerCase())) {
+                p2 = p;
+                break;
+            }
+        }
+        if (p2 == null && !products2.isEmpty()) p2 = products2.get(0);
+
+        if (p1 == null || p2 == null) {
+            return "ERROR: Combo items not found in database";
+        }
+
+        if (p1.getStock() < 1 || p2.getStock() < 1) {
+            return "ERROR: Insufficient stock for combo items.";
+        }
+
+        Cart cart = getOrCreateCart(session);
+        cart.addItem(p1, 1);
+        cart.addItem(p2, 1);
+
+        return "SUCCESS:" + cart.getItemCount();
+    }
 }

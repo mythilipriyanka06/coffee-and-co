@@ -52,6 +52,11 @@ public class AuthController {
         User user = userService.login(email, password);
         if (user != null) {
             session.setAttribute("user", user);
+            String redirectUrl = (String) session.getAttribute("redirectUrl");
+            if (redirectUrl != null) {
+                session.removeAttribute("redirectUrl");
+                return "redirect:" + redirectUrl;
+            }
             if ("ADMIN".equals(user.getRole())) {
                 return "redirect:/admin/dashboard";
             } else {

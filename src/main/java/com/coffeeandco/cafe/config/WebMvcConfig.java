@@ -25,7 +25,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/css/**", 
                         "/js/**", 
                         "/images/**",
-                        "/" // Redirect rule to login/shop
+                        "/", // Redirect rule to login/shop
+                        "/product/**"
                 );
     }
 }
